@@ -1,0 +1,271 @@
+  @extends('layouts.app')
+  @section('title')
+      My Booking Details
+  @endsection
+  @section('content')
+      <div class="h-[112px]">
+          <x-nav />
+      </div>
+
+      <section id="Content" class="w-full max-w-[1280px] mx-auto px-4 lg:px-[52px] mt-16 mb-[100px]">
+          <div class="flex flex-col gap-16">
+              <div class="flex flex-col items-center gap-1">
+                  <p class="font-bold text-[32px] leading-[48px] capitalize text-black">Your booking Film</p>
+                  <p class="font-semibold text-black">happy Watching</p>
+              </div>
+              <main class="flex flex-col lg:flex-row gap-8">
+                  <section id="Sidebar" class="group flex flex-col w-full lg:w-[420px] h-fit rounded-3xl p-8 bg-white">
+                      <div class="flex flex-col gap-4">
+                          <h2 class="font-Neue-Plak-bold text-xl leading-[27.5px]">Film Details</h2>
+                          <div class="thumbnail-container relative h-[240px] rounded-xl bg-[#D9D9D9] overflow-hidden">
+                              <img src="{{ Storage::url($myBookingDetails->workshop->thumbnail) }}"
+                                  class="w-full h-full object-cover" alt="thumbnail">
+                          </div>
+                          <div class="card-detail flex flex-col gap-2">
+                              <div class="flex items-center gap-3">
+                                  <div class="flex items-center gap-1">
+                                      <img src="{{ asset('assets/images/icons/calendar-2.svg') }}"
+                                          class="w-6 h-6 flex shrink-0" alt="icon">
+                                      <span
+                                          class="font-medium text-aktiv-grey">{{ $myBookingDetails->workshop->started_at->format('M d, Y') }}</span>
+                                  </div>
+                                  <div class="flex items-center gap-1">
+                                      <img src="{{ asset('assets/images/icons/timer.svg') }}" class="w-6 h-6 flex shrink-0"
+                                          alt="icon">
+                                      <span class="font-medium text-aktiv-grey">
+                                          {{ $myBookingDetails->workshop->time_at->format('h:i A') }} -
+                                          Finish</span>
+                                  </div>
+                              </div>
+                              <h3 class="font-Neue-Plak-bold text-xl">{{ $myBookingDetails->workshop->name }}</h3>
+                          </div>
+                      </div>
+                      <div id="closes-section"
+                          class="accordion flex flex-col gap-8 transition-all duration-300 mt-8 group-has-[:checked]:mt-0 group-has-[:checked]:!h-0 overflow-hidden">
+                          <div class="flex flex-col gap-4">
+                              <h2 class="font-Neue-Plak-bold text-xl leading-[27.5px]">Sutradara</h2>
+                              <div class="flex items-center gap-3 rounded-xl border border-[#E6E7EB] p-4">
+                                  <div class="flex w-16 h-16 shrink-0 rounded-full overflow-hidden bg-[#D9D9D9]">
+                                      <img src="{{ Storage::url($myBookingDetails->workshop->instructor->avatar) }}"
+                                          class="w-full h-full object-cover" alt="photo">
+                                  </div>
+                                  <div class="flex flex-col gap-[2px] flex-1">
+                                      <p class="font-semibold text-lg leading-[27px]">
+                                          {{ $myBookingDetails->workshop->instructor->name }}</p>
+                                      <p class="font-medium text-aktiv-grey">
+                                          {{ $myBookingDetails->workshop->instructor->occupation }}</p>
+                                  </div>
+                                  <img src="{{ asset('assets/images/icons/verify.svg') }}"
+                                      class="flex w-[62px] h-[62px] shrink-0" alt="icon">
+                              </div>
+                          </div>
+                          <div class="flex flex-col gap-4">
+                              <h2 class="font-Neue-Plak-bold text-xl leading-[27.5px]">Telah Bekerjasama Dengan</h2>
+                              @forelse ($myBookingDetails->workshop->benefits as $itemBenefit)
+                                  <div class="flex flex-col gap-6">
+                                      <div class="flex items-center gap-2">
+                                          <img src="{{ asset('assets/images/icons/tick-circle.svg') }}"
+                                              class="w-6 h-6 flex shrink-0" alt="icon">
+                                          <p class="font-semibold text-lg leading-[27px]">{{ $itemBenefit->name }}</p>
+                                      </div>
+                                  </div>
+                              @empty
+                                  <p>Belum ada data benefit</p>
+                              @endforelse
+                          </div>
+                      </div>
+                      <label class="group mt-8">
+                          <input type="checkbox" class="hidden">
+                          <p
+                              class="before:content-['Show_Less'] group-has-[:checked]:before:content-['Show_More'] before:font-semibold before:text-lg before:leading-[27px] flex items-center justify-center gap-[6px]">
+                              <img src="{{ asset('assets/images/icons/arrow-up.svg') }}"
+                                  class="w-6 h-6 group-has-[:checked]:rotate-180 transition-all duration-300"
+                                  alt="icon">
+                          </p>
+                      </label>
+                  </section>
+                  <div class="flex flex-col w-full lg:w-[724px] gap-8">
+                      <div class="flex flex-col rounded-3xl bg-white overflow-hidden">
+
+                          @if ($myBookingDetails->is_paid)
+                              <div class="flex items-center p-8 gap-4 bg-[#D4EAE8]">
+                                  <img src="{{ asset('assets/images/icons/wallet-check.svg') }}"
+                                      class="w-[74px] h-[74px] flex shrink-0" alt="icon">
+                                  <div class="flex flex-col gap-1">
+                                      <p class="font-semibold text-lg leading-[27px]">Status Payment Success!</p>
+                                      <p class="font-medium text-lg leading-[27px] text-[#58938E]">Your order is confirmed.
+                                          We
+                                          appreciate your patience.</p>
+                                  </div>
+                              </div>
+                          @else
+                              <div class="flex items-center p-8 gap-4 bg-[#FDF6E4]">
+                                  <img src="{{ asset('assets/images/icons/wallet-time.svg') }}"
+                                      class="w-[74px] h-[74px] flex shrink-0" alt="icon">
+                                  <div class="flex flex-col gap-1">
+                                      <p class="font-semibold text-lg leading-[27px]">Status Payment Pending!</p>
+                                      <p class="font-medium text-lg leading-[27px] text-[#B4A476]">Your order is pending.
+                                          Please
+                                          wait a few minutes for review.</p>
+                                  </div>
+                              </div>
+                          @endif
+                          <div class="flex flex-col gap-4 p-8">
+                              <h2 class="font-Neue-Plak-bold text-xl leading-[27.5px]">Booking Details</h2>
+                              <div class="flex flex-col rounded-xl border border-[#E6E7EB] p-6 gap-4">
+                                  <div class="flex items-center justify-between">
+                                      <p class="font-medium text-aktiv-grey">Booking ID</p>
+                                      <p class="font-semibold text-lg leading-[27px] text-right">
+                                          {{ $myBookingDetails->booking_trx_id }}</p>
+                                  </div>
+                                  <div class="flex items-center justify-between">
+                                      <p class="font-medium text-aktiv-grey">Quantity</p>
+                                      <p class="font-semibold text-lg leading-[27px] text-right">
+                                          {{ $myBookingDetails->quantity }}</p>
+                                  </div>
+                                  <div class="flex items-center justify-between">
+                                      <p class="font-medium text-aktiv-grey">Price</p>
+                                      <p class="font-semibold text-lg leading-[27px] text-right">Rp
+                                          {{ number_format($subTotalAmount, 0, '.', ',') }}</p>
+                                  </div>
+                                  <div class="flex items-center justify-between">
+                                      <p class="font-medium text-aktiv-grey">PPN 11%</p>
+                                      <p class="font-semibold text-lg leading-[27px] text-right">Rp
+                                          {{ number_format($totalTax, 0, '.', ',') }}
+                                  </div>
+                                  <hr class="border-[#E6E7EB]">
+                                  <div class="flex items-center justify-between">
+                                      <p class="font-medium text-aktiv-grey">Total Price</p>
+                                      <p class="font-semibold text-lg leading-[27px] text-right text-aktiv-red">
+                                          Rp
+                                          {{ number_format($myBookingDetails['total_amount'], 0, '.', ',') }}</p>
+                                      </p>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="flex flex-col rounded-3xl p-8 gap-4 bg-white">
+                          <h2 class="font-Neue-Plak-bold text-xl leading-[27.5px]">Your Bank Account</h2>
+                          <div class="flex flex-col gap-6">
+                              <div class="flex flex-col gap-4">
+                                  <p class="font-medium text-aktiv-grey">Bank Name</p>
+                                  <div
+                                      class="input-wrapper flex items-center rounded-xl p-4 gap-2 bg-[#FBFBFB] overflow-hidden">
+                                      <img src="{{ asset('assets/images/icons/bank-black.svg') }}"
+                                          class="w-6 h-6 flex shrink-0" alt="icon">
+                                      <p class="font-semibold text-lg leading-[27px]">
+                                          {{ $myBookingDetails->customer_bank_name }}</p>
+                                  </div>
+                              </div>
+                              <div class="flex flex-col gap-4">
+                                  <p class="font-medium text-aktiv-grey">Full Name</p>
+                                  <div
+                                      class="input-wrapper flex items-center rounded-xl p-4 gap-2 bg-[#FBFBFB] overflow-hidden">
+                                      <img src="{{ asset('assets/images/icons/profile-circle-black.svg') }}"
+                                          class="w-6 h-6 flex shrink-0" alt="icon">
+                                      <p class="font-semibold text-lg leading-[27px]">
+                                          {{ $myBookingDetails->customer_bank_account }}</p>
+                                  </div>
+                              </div>
+                              <div class="flex flex-col gap-4">
+                                  <p class="font-medium text-aktiv-grey">Bank account number</p>
+                                  <div
+                                      class="input-wrapper flex items-center rounded-xl p-4 gap-2 bg-[#FBFBFB] overflow-hidden">
+                                      <img src="{{ asset('assets/images/icons/card-edit-black.svg') }}"
+                                          class="w-6 h-6 flex shrink-0" alt="icon">
+                                      <p class="font-semibold text-lg leading-[27px]">
+                                          {{ $myBookingDetails->customer_bank_number }}</p>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="flex flex-col rounded-3xl p-8 gap-8 bg-white">
+                          <div class="flex flex-col gap-4">
+                              <h2 class="font-Neue-Plak-bold text-xl leading-[27.5px]">Attendants Details</h2>
+                              <div class="flex flex-col gap-6">
+                                  @forelse ($myBookingDetails->participants as $itemParticipant)
+                                      <div class="attendant-wrapper flex flex-col gap-[10px]">
+                                          <div id="Attendant-1"
+                                              class="group/accordion peer flex flex-col rounded-2xl border border-[#E6E7EB] p-6">
+                                              <label class="flex items-center justify-between">
+                                                  <p class="font-semibold text-lg leading-[27px]">Attendants
+                                                      {{ $loop->iteration }}</p>
+                                                  <input type="checkbox" name="accodion" class="hidden">
+                                                  <img src="{{ asset('assets/images/icons/arrow-square-up.svg') }}"
+                                                      class="w-6 h-6 transition-all duration-300 group-has-[:checked]/accordion:rotate-180"
+                                                      alt="icon">
+                                              </label>
+                                              <div
+                                                  class="accordion flex flex-col gap-6 mt-6 transition-all duration-300 group-has-[:checked]/accordion:!h-0 group-has-[:checked]/accordion:mt-0 overflow-y-hidden">
+                                                  <hr class="border-[#E6E7EB]">
+                                                  <div class="flex flex-col gap-4">
+                                                      <p class="font-medium text-aktiv-grey">Full Name</p>
+                                                      <div
+                                                          class="input-wrapper flex items-center rounded-xl p-4 gap-2 bg-[#FBFBFB] overflow-hidden">
+                                                          <img src="{{ asset('assets/images/icons/profile-circle-black.svg') }}"
+                                                              class="w-6 h-6 flex shrink-0" alt="icon">
+                                                          <p class="font-medium text-lg leading-[27px]">
+                                                              {{ $itemParticipant->name }}</p>
+                                                      </div>
+                                                  </div>
+                                                  <div class="flex flex-col gap-4">
+                                                      <p class="font-medium text-aktiv-grey">Occupation</p>
+                                                      <div
+                                                          class="input-wrapper flex items-center rounded-xl p-4 gap-2 bg-[#FBFBFB] overflow-hidden">
+                                                          <img src="{{ asset('assets/images/icons/briefcase-black.svg') }}"
+                                                              class="w-6 h-6 flex shrink-0" alt="icon">
+                                                          <p class="font-medium text-lg leading-[27px]">
+                                                              {{ $itemParticipant->occupation }}</p>
+                                                      </div>
+                                                  </div>
+                                                  <div class="flex flex-col gap-4">
+                                                      <p class="font-medium text-aktiv-grey">Email Address</p>
+                                                      <div
+                                                          class="input-wrapper flex items-center rounded-xl p-4 gap-2 bg-[#FBFBFB] overflow-hidden">
+                                                          <img src="{{ asset('assets/images/icons/sms-black.svg') }}"
+                                                              class="w-6 h-6 flex shrink-0" alt="icon">
+                                                          <p class="font-medium text-lg leading-[27px]">
+                                                              {{ $itemParticipant->email }}
+                                                          </p>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  @empty
+                                  @endforelse
+
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </main>
+          </div>
+      </section>
+  @endsection
+  @push('after-scripts')
+      <script>
+          document.addEventListener('DOMContentLoaded', () => {
+              // Function to calculate and set heights of accordions
+              function calculateAccordionHeights() {
+                  const accordions = document.querySelectorAll('.accordion');
+
+                  accordions.forEach((accordion) => {
+                      // Calculate the height of each accordion element
+                      const height = accordion.scrollHeight;
+
+                      // Set the height as an inline style
+                      accordion.style.height = `${height}px`;
+                  });
+              }
+
+              // Initial calculation when the DOM is fully loaded
+              calculateAccordionHeights();
+
+              // Recalculate when a new participant is added
+              document.addEventListener('newParticipantAdded', () => {
+                  calculateAccordionHeights();
+              });
+          });
+      </script>
+  @endpush
