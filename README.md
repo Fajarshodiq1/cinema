@@ -16,27 +16,6 @@ Dibangun untuk memenuhi salah satu tugas matakuliah Teknososiopreneur lanjutan
 
 ---
 
-## Screenshot
-
-Berikut adalah beberapa gambar dari proyek ini:
-
-1. **Halaman Utama**
-   ![Homepage](public/assets/images/homepage.png)
-
-2. **Detail Produk**
-   ![Registration Form](public/assets/images/detail.png)
-
-3. **Halaman Pendaftaran**
-   ![Admin Panel](public/assets/images/pendaftaran.png)
-
-4. **Halaman Login Admin**
-   ![User Profile](public/assets/images/login.png)
-
-5. **Daftar Produk**
-   ![Product List](public/assets/images/dashboard.png)
-
----
-
 ## Cara Instalasi
 
 Ikuti langkah-langkah berikut untuk menjalankan proyek ini:
