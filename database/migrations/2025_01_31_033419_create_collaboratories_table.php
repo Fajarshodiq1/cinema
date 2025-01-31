@@ -6,17 +6,15 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /** 
+    /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('collaboratories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('tagline');
-            $table->string('slug');
-            $table->string('icon');
+            $table->foreignId('film_id')->constrained()->cascadeOnDelete();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('collaboratories');
     }
 };

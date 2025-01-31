@@ -237,7 +237,7 @@
                                 </div>
                             </label>
                         </div>
-                        <button type="submit"
+                        <button type="submit" id="submit-btn"
                             class="w-full rounded-xl h-16 px-6 text-center bg-aktiv-orange font-semibold text-lg leading-[27px] text-white">Continue
                             to Checkout</button>
                     </div>
@@ -248,6 +248,18 @@
 @endsection
 @push('after-scripts')
     <script>
+        document.getElementById("submit-btn").addEventListener("click", function(event) {
+            event.preventDefault(); // Mencegah form langsung submit
+
+            Swal.fire({
+                title: "Pendaftaran Berhasil!",
+                text: "Silahkan tunggu admin untuk memberikan kode booking di WhatsApp.",
+                icon: "success",
+                confirmButtonText: "OK"
+            }).then(() => {
+                document.getElementById("your-form-id").submit(); // Ganti dengan ID form kamu
+            });
+        });
         const fileInput = document.getElementById("Proof");
         const fileBtn = document.getElementById("Upload-btn");
 
